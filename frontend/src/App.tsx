@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import * as React from "react";
 import Home from "./components/home/Home.tsx";
 import NotFound from "./components/not-found/NotFound.tsx";
