@@ -10,11 +10,15 @@ import lombok.Setter;
 @Table(name = "currency")
 public class Currency {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private short id;
 
     @Column(length = 3)
     private String symbol;
+
+    public Currency(String symbol) {
+        this.symbol = symbol;
+    }
 
     public Currency(short id, String symbol) {
         this.id = id;

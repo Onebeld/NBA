@@ -52,6 +52,7 @@ public class User implements Serializable, UserDetails {
     @Getter
     private Role role;
 
+    @Getter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BankAccount> bankAccounts = new ArrayList<>();
 

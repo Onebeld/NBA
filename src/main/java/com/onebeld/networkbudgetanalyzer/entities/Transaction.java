@@ -26,7 +26,7 @@ public class Transaction {
     private Organization organization;
 
     @ManyToOne
-    @JoinColumn(name = "bank_account_id", referencedColumnName = "id")
+    @JoinColumn(name = "bankAccount", referencedColumnName = "id")
     private BankAccount bankAccount;
 
     @Enumerated(EnumType.ORDINAL)
