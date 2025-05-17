@@ -4,6 +4,8 @@ import com.onebeld.networkbudgetanalyzer.enums.Operation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -29,6 +31,7 @@ public class Transaction {
     @JoinColumn(name = "bankAccount", referencedColumnName = "id")
     private BankAccount bankAccount;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated()
+    @JdbcTypeCode(SqlTypes.SMALLINT)
     private Operation operation;
 }

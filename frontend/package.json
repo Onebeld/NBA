@@ -11,11 +11,15 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
+    "@heroui/react": "^2.8.0-beta.4",
     "@tailwindcss/vite": "^4.1.4",
+    "i18next-http-backend": "^3.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.5.1",
     "react-router-dom": "^7.4.0",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.4",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

@@ -20,12 +20,5 @@ public class AccountType {
         this.name = name;
     }
 
-    public AccountType(short id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public AccountType() {
-
-    }
+    public AccountType() { }
 }

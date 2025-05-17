@@ -5,7 +5,7 @@ const Home: React.FC = () => (
     <div>
         <h1>Home Page</h1>
 
-        <Link to={"/dashboard"}>Dashboard</Link>
+        <Link to={"/dashboard/home"}>Dashboard</Link>
     </div>
 );
 

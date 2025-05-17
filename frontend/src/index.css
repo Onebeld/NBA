@@ -1,99 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@plugin './hero.ts';
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+    #root {
+        @apply bg-background;
+    }
 
-  transition: background-color 0.5s ease, color 0.5s ease;
+    aside.menu-container {
+        @apply z-40 w-24 bg-primary m-3 py-7 rounded-2xl;
 
-  /* For theme */
-  --primary-background-color: #fff;
-  --secondary-background-color: #DDE5ED;
+        ul {
+            @apply mx-4 text-center content-center min-h-full text-small flex-col space-y-10;
+        }
+        li {
+            @apply bg-transparent;
+        }
+    }
 
-  --primary-border-color: #606EB2;
+    .navlink-button {
+        @apply text-primary-300 transition duration-150;
 
-  --accent-color: #071D49;
-  --secondary-accent-color: #878CB4;
+        svg {
+            @apply fill-primary-300 transition-colors duration-150;
+        }
 
-  --primary-text-color: #071D49;
-  --secondary-text-color: #2C5697;
-  --tertiary-text-color: #8E9FBC;
-}
+        &:hover {
+            @apply text-primary-200;
 
-[data-theme="dark"] {
-  --primary-background-color: #071D49;
-  --secondary-background-color: #1A1A1A;
+            svg {
+                @apply fill-primary-200;
+            }
+        }
 
-  --primary-border-color: #8E9FBC;
+        &.active {
+            @apply text-primary-foreground;
 
-  --accent-color: #fff;
-  --secondary-accent-color: #8E9FBC;
+            svg {
+                @apply fill-primary-foreground;
+            }
+        }
+    }
 
-  --primary-text-color: #fff;
-  --secondary-text-color: #8E9FBC;
-  --tertiary-text-color: #DDE5ED;
-}
+    .svg-background {
+        @apply fill-content1 absolute z-0;
+    }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    h1.dashboard-title {
+        @apply text-primary text-lg font-bold text-center;
+    }
 }

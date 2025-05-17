@@ -20,12 +20,5 @@ public class Currency {
         this.symbol = symbol;
     }
 
-    public Currency(short id, String symbol) {
-        this.id = id;
-        this.symbol = symbol;
-    }
-
-    public Currency() {
-
-    }
+    public Currency() { }
 }

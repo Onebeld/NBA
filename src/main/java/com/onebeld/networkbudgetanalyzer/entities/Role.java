@@ -24,14 +24,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Role(short id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Role() {
-
-    }
+    public Role() { }
 
     @Override
     public String getAuthority() {

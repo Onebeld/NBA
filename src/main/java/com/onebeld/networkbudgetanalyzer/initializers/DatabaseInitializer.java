@@ -9,6 +9,10 @@ import com.onebeld.networkbudgetanalyzer.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * Инициализатор базы данных, выполняющий каждый раз, когда запускается сервер.
+ * Благодаря проверке на наличие записей в таблице инициализатор ничего не добавляет.
+ */
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
@@ -23,13 +27,20 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.accountTypeRepository = accountTypeRepository;
     }
 
+    /**
+     * Запуск инициализации базы данных
+     * @param args incoming main method arguments
+     */
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         initializeRoles();
         initializeAccountTypes();
         initializeCurrencies();
     }
 
+    /**
+     * Инициализация ролей
+     */
     private void initializeRoles() {
         if (roleRepository.count() != 0)
             return;
@@ -39,6 +50,9 @@ public class DatabaseInitializer implements CommandLineRunner {
         roleRepository.save(userRole);
     }
 
+    /**
+     * Инициализация валют
+     */
     private void initializeCurrencies() {
         if (currencyRepository.count() != 0)
             return;
@@ -54,6 +68,9 @@ public class DatabaseInitializer implements CommandLineRunner {
         currencyRepository.save(kztCurrency);
     }
 
+    /**
+     * Инициализация счетов
+     */
     private void initializeAccountTypes() {
         if (accountTypeRepository.count() != 0)
             return;

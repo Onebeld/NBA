@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {Routes, Route, useNavigate, useHref} from "react-router-dom";
 import * as React from "react";
 import Home from "./pages/Home.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -10,36 +10,54 @@ import HomeDashboard from "./pages/dashboard/HomeDashboard.tsx";
 import Bills from "./pages/dashboard/Bills.tsx";
 import Profile from "./pages/dashboard/Profile.tsx";
 import Analytics from "./pages/dashboard/Analytics.tsx";
+import {HeroUIProvider} from "@heroui/react";
+import i18n from "i18next";
+import HttpBackend from "i18next-http-backend";
+import {initReactI18next} from "react-i18next";
+
+i18n.use(HttpBackend)
+    .use(initReactI18next)
+    .init({
+        fallbackLng: "en",
+        backend: {
+            loadPath: "/locales/{{lng}}/{{ns}}.json"
+        },
+        interpolation: {
+            escapeValue: false
+        }
+    });
 
 const App: React.FC = () => {
-    const [theme, setTheme] = React.useState("light");
+    const navigate = useNavigate();
 
-    const selectedTheme = localStorage.getItem("theme");
+    React.useEffect(() => {
+        const theme = localStorage.getItem("theme");
 
-    if (selectedTheme) {
-        document.querySelector('body')?.setAttribute('data-theme', selectedTheme);
-    }
+        if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+        }
+    }, []);
 
     return (
-        <BrowserRouter>
+        <HeroUIProvider navigate={navigate} useHref={useHref}>
             <Routes>
-                <Route path="*" element={<NotFound/>} />
+                <Route path="*" element={<NotFound/>}/>
 
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
 
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<Home/>}/>
 
                 <Route element={<ProtectedRoutes/>}>
-                    <Route path={"/dashboard"} element={<Dashboard/>}>
-                        <Route index element={<HomeDashboard/>} />
-                        <Route path={"/dashboard/analytics"} element={<Analytics/>} />
-                        <Route path={"/dashboard/bills"} element={<Bills/>} />
-                        <Route path={"/dashboard/profile"} element={<Profile/>} />
+                    <Route element={<Dashboard/>}>
+                        <Route path={"/dashboard/home"} element={<HomeDashboard/>}/>
+                        <Route path={"/dashboard/analytics"} element={<Analytics/>}/>
+                        <Route path={"/dashboard/bills"} element={<Bills/>}/>
+                        <Route path={"/dashboard/profile"} element={<Profile/>}/>
                     </Route>
                 </Route>
             </Routes>
-        </BrowserRouter>
+        </HeroUIProvider>
     );
 };
 
