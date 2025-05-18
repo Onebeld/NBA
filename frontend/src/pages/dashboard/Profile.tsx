@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
                                        </svg>
                                    }>
                         <div className={"flex"} style={{paddingLeft: "37px"}}>
-                            <p className={"flex-auto"}>{t("EnableDarkTheme")}</p>
+                            <p className={"flex-auto"}>{t("Customization.EnableDarkTheme")}</p>
                             <Switch isSelected={isDarkTheme} onValueChange={setIsDarkTheme} />
                         </div>
                     </AccordionItem>

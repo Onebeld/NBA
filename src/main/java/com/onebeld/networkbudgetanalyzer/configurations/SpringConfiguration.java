@@ -22,6 +22,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addStatusController("/api/**", HttpStatus.BAD_REQUEST);
+        registry.addStatusController("/locales/**", HttpStatus.BAD_REQUEST);
         registry.setOrder(1000);
     }
 }

@@ -11,18 +11,11 @@
     }
 
     aside.menu-container {
-        @apply z-40 w-24 bg-primary m-3 py-7 rounded-2xl;
-
-        ul {
-            @apply mx-4 text-center content-center min-h-full text-small flex-col space-y-10;
-        }
-        li {
-            @apply bg-transparent;
-        }
+        @apply z-40 bg-primary m-3 py-5 rounded-2xl flex justify-evenly md:py-7 md:justify-center md:w-24 md:flex-col md:gap-10;
     }
 
     .navlink-button {
-        @apply text-primary-300 transition duration-150;
+        @apply text-primary-300 transition duration-150 flex flex-col items-center;
 
         svg {
             @apply fill-primary-300 transition-colors duration-150;

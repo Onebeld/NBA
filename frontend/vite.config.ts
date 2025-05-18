@@ -8,6 +8,6 @@ export default defineConfig({
     plugins: [react(), tsconfigPaths(), tailwindcss()],
     build: {
         outDir: '../src/main/resources/static',
-        emptyOutDir: true
+        emptyOutDir: true,
     }
 })
