@@ -15,6 +15,7 @@ import i18n from "i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import {initReactI18next} from "react-i18next";
+import {Suspense} from "react";
 
 i18n.use(HttpBackend)
     .use(LanguageDetector)
@@ -54,23 +55,25 @@ const App: React.FC = () => {
 
     return (
         <HeroUIProvider navigate={navigate} useHref={useHref}>
-            <Routes>
-                <Route path="*" element={<NotFound/>}/>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                    <Route path="*" element={<NotFound/>}/>
 
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
 
-                <Route path="/" element={<Home/>}/>
+                    <Route path="/" element={<Home/>}/>
 
-                <Route element={<ProtectedRoutes/>}>
-                    <Route element={<Dashboard/>}>
-                        <Route path={"/dashboard/home"} element={<HomeDashboard/>}/>
-                        <Route path={"/dashboard/analytics"} element={<Analytics/>}/>
-                        <Route path={"/dashboard/bills"} element={<Bills/>}/>
-                        <Route path={"/dashboard/profile"} element={<Profile/>}/>
+                    <Route element={<ProtectedRoutes/>}>
+                        <Route element={<Dashboard/>}>
+                            <Route path={"/dashboard/home"} element={<HomeDashboard/>}/>
+                            <Route path={"/dashboard/analytics"} element={<Analytics/>}/>
+                            <Route path={"/dashboard/bills"} element={<Bills/>}/>
+                            <Route path={"/dashboard/profile"} element={<Profile/>}/>
+                        </Route>
                     </Route>
-                </Route>
-            </Routes>
+                </Routes>
+            </Suspense>
         </HeroUIProvider>
     );
 };

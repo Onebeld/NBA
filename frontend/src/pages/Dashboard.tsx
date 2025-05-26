@@ -1,16 +1,24 @@
 import * as React from "react";
 import {NavLink, Outlet} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {ScrollShadow} from "@heroui/react";
+
+const BackgroundSvg: React.FC = () => {
+    return (
+        <svg className={"svg-background"} viewBox="0 0 1920 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0H1920V392.182C1920 392.182 1697.39 430 960 430C222.609 430 0 392.182 0 392.182V0Z" />
+        </svg>
+    );
+};
 
 const Dashboard: React.FC = () => {
     const { t } = useTranslation();
 
     return (
-        <div>
-            <svg className={"svg-background"} viewBox="0 0 1920 430" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0H1920V392.182C1920 392.182 1697.39 430 960 430C222.609 430 0 392.182 0 392.182V0Z" />
-            </svg>
-            <div className="min-h-screen flex-col-reverse flex md:flex-row">
+        <>
+            <BackgroundSvg/>
+
+            <div className="flex-col-reverse flex min-h-screen md:flex-row">
                 <aside className={"menu-container z-10 flex-none"}>
                     <NavLink to={"/dashboard/home"}
                              className={({isActive}) =>
@@ -77,13 +85,13 @@ const Dashboard: React.FC = () => {
                         {t("Profile")}
                     </NavLink>
                 </aside>
-                <div className={"p-4 z-10 flex-1"}>
+                <ScrollShadow className={"md:h-screen p-4 z-10 flex-1"}>
                     <div className={"m-4"}>
                         <Outlet/>
                     </div>
-                </div>
+                </ScrollShadow>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -4,6 +4,24 @@
   "Profile": "Profile",
   "Analytics": "Analytics",
 
+  "Tip": "Tip",
+
+  "Tip.1": "Determine your income and expenses to see where your money goes. This will help you identify inefficient spending and save money.",
+  "Tip.2": "Try to set aside 3-6 months of expenses for emergencies such as job loss or serious medical expenses.",
+  "Tip.3": "Before making financial decisions (like opening an account or taking out a mortgage), compare different options and choose the most favorable ones.",
+
+  "ProfileSetting":  "Profile Setting",
   "Customization": "Customization",
-  "Customization.EnableDarkTheme": "Enable dark theme"
+  "Customization.EnableDarkTheme": "Enable dark theme",
+  "LogOut": "Log out",
+
+  "Username": "Username",
+  "Email": "Email",
+  "Phone": "Phone",
+  "Password": "Password",
+  "ConfirmPassword": "Confirm password",
+  "Save": "Save",
+  "LogOutMessage": "Are you sure you want to log out?",
+  "Yes": "Yes",
+  "No": "No"
 }
