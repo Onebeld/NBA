@@ -1,9 +1,12 @@
 package com.onebeld.networkbudgetanalyzer.initializers;
 
 import com.onebeld.networkbudgetanalyzer.entities.AccountType;
+import com.onebeld.networkbudgetanalyzer.entities.Bank;
 import com.onebeld.networkbudgetanalyzer.entities.Currency;
 import com.onebeld.networkbudgetanalyzer.entities.Role;
+import com.onebeld.networkbudgetanalyzer.enums.ERole;
 import com.onebeld.networkbudgetanalyzer.repositories.AccountTypeRepository;
+import com.onebeld.networkbudgetanalyzer.repositories.BankRepository;
 import com.onebeld.networkbudgetanalyzer.repositories.CurrencyRepository;
 import com.onebeld.networkbudgetanalyzer.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -21,10 +24,13 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final AccountTypeRepository accountTypeRepository;
 
-    public DatabaseInitializer(RoleRepository roleRepository, CurrencyRepository currencyRepository, AccountTypeRepository accountTypeRepository) {
+    private final BankRepository bankRepository;
+
+    public DatabaseInitializer(RoleRepository roleRepository, CurrencyRepository currencyRepository, AccountTypeRepository accountTypeRepository, BankRepository bankRepository) {
         this.roleRepository = roleRepository;
         this.currencyRepository = currencyRepository;
         this.accountTypeRepository = accountTypeRepository;
+        this.bankRepository = bankRepository;
     }
 
     /**
@@ -36,6 +42,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         initializeRoles();
         initializeAccountTypes();
         initializeCurrencies();
+        initializeBanks();
     }
 
     /**
@@ -45,9 +52,11 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (roleRepository.count() != 0)
             return;
 
-        Role userRole = new Role("USER");
-
+        Role userRole = new Role(ERole.ROLE_USER);
         roleRepository.save(userRole);
+
+        Role adminRole = new Role(ERole.ROLE_ADMIN);
+        roleRepository.save(adminRole);
     }
 
     /**
@@ -57,10 +66,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (currencyRepository.count() != 0)
             return;
 
-        Currency eurCurrency = new Currency("EUR");
-        Currency usdCurrency = new Currency("USD");
-        Currency rubCurrency = new Currency("RUB");
-        Currency kztCurrency = new Currency("KZT");
+        Currency eurCurrency = new Currency("EUR", "€");
+        Currency usdCurrency = new Currency("USD", "$");
+        Currency rubCurrency = new Currency("RUB", "₽");
+        Currency kztCurrency = new Currency("KZT", "₸");
 
         currencyRepository.save(eurCurrency);
         currencyRepository.save(usdCurrency);
@@ -82,5 +91,23 @@ public class DatabaseInitializer implements CommandLineRunner {
         accountTypeRepository.save(paymentAccountType);
         accountTypeRepository.save(bankCardAccountType);
         accountTypeRepository.save(cashAccountType);
+    }
+
+    /**
+     * Инициализация банков
+     */
+    private void initializeBanks() {
+        if (bankRepository.count() != 0)
+            return;
+
+        Bank tinkoffBank = new Bank("Тинькофф");
+        Bank sberBank = new Bank("Сбербанк");
+        Bank alphabankBank = new Bank("Альфа-банк");
+        Bank rosselhosBank = new Bank("Россельхоз Банк");
+
+        bankRepository.save(tinkoffBank);
+        bankRepository.save(sberBank);
+        bankRepository.save(alphabankBank);
+        bankRepository.save(rosselhosBank);
     }
 }

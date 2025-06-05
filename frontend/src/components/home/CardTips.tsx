@@ -10,7 +10,7 @@ const tips = [
 
 const CardTipSvg = () => (
     <svg width="98" height="80" viewBox="0 0 98 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_4521_2469)">
+        <g clipPath="url(#clip0_4521_2469)">
             <path
                 d="M93.9394 69.9973C93.5502 66.6908 91.6108 63.433 88.6263 62.3569C89.8033 65.7603 89.8031 69.4938 88.6256 72.8969C88.167 74.2076 87.5278 75.615 87.9592 76.936C88.2275 77.758 88.8841 78.3868 89.6181 78.78C90.3521 79.1733 91.1666 79.3607 91.971 79.5443L92.1293 79.6827C93.4062 76.6361 94.3286 73.3038 93.9394 69.9973Z"
                 fill="#F0F0F0"/>
@@ -163,7 +163,7 @@ interface CardTipsProps {
     className?: string
 }
 
-const CardTips: React.FC = ({className}: CardTipsProps) => {
+const CardTips = ({className}: CardTipsProps) => {
     const { t } = useTranslation();
 
     const [ isFadingOut, setIsFadingOut ] = React.useState(false);
@@ -172,8 +172,6 @@ const CardTips: React.FC = ({className}: CardTipsProps) => {
     const cardTipText = React.useRef<HTMLParagraphElement>(null);
 
     function setTip(index: number) {
-        console.log(`Tip ${index + 1} clicked!`);
-
         setSelectedTip(index);
     }
 
@@ -216,7 +214,7 @@ const CardTips: React.FC = ({className}: CardTipsProps) => {
 
             <div className="flex justify-center gap-5 mt-2">
                 {tips.map((_, index) => (
-                    <CardTipDot isActive={selectedTip === index} onClick={() => setTip(index)}/>
+                    <CardTipDot key={index} isActive={selectedTip === index} onClick={() => setTip(index)}/>
                 ))}
             </div>
         </div>

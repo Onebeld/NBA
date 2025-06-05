@@ -1,4 +1,4 @@
-import {Routes, Route, useNavigate, useHref} from "react-router-dom";
+import {Routes, Route, useNavigate, useHref, Navigate} from "react-router-dom";
 import * as React from "react";
 import Home from "./pages/Home.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -16,6 +16,7 @@ import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import {initReactI18next} from "react-i18next";
 import {Suspense} from "react";
+import { AuthProvider } from "./contexts/AuthContext";
 
 i18n.use(HttpBackend)
     .use(LanguageDetector)
@@ -42,7 +43,7 @@ i18n.use(HttpBackend)
         }
     });
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -65,6 +66,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<Home/>}/>
 
                     <Route element={<ProtectedRoutes/>}>
+                        <Route path="/dashboard" element={<Navigate to="/dashboard/home" replace />} />
                         <Route element={<Dashboard/>}>
                             <Route path={"/dashboard/home"} element={<HomeDashboard/>}/>
                             <Route path={"/dashboard/analytics"} element={<Analytics/>}/>
@@ -75,6 +77,14 @@ const App: React.FC = () => {
                 </Routes>
             </Suspense>
         </HeroUIProvider>
+    );
+};
+
+const App: React.FC = () => {
+    return (
+        <AuthProvider>
+            <AppContent />
+        </AuthProvider>
     );
 };
 

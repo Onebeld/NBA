@@ -10,6 +10,16 @@
   "Tip.2": "Try to set aside 3-6 months of expenses for emergencies such as job loss or serious medical expenses.",
   "Tip.3": "Before making financial decisions (like opening an account or taking out a mortgage), compare different options and choose the most favorable ones.",
 
+  "Transactions": "Transactions",
+  "AddTransaction": "Add transaction",
+
+  "TotalBalance": "Total balance",
+  "Cards": "Cards",
+  "AddCard": "Add card",
+  "AddBill": "Add bill",
+  "Card": "Card",
+  "Bill": "Bill",
+
   "ProfileSetting":  "Profile Setting",
   "Customization": "Customization",
   "Customization.EnableDarkTheme": "Enable dark theme",

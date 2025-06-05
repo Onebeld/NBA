@@ -1,64 +1,76 @@
 package com.onebeld.networkbudgetanalyzer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-@Setter
 @Entity
 @Table(name = "users")
-public class User implements Serializable, UserDetails {
+@Getter
+@Setter
+@NoArgsConstructor
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 20)
     private String username;
 
-    @Column(nullable = false)
-    @Getter
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column
-    @Getter
-    private String imageUrl;
-
-    @Column(nullable = false)
-    @Getter
-    private int telephone;
-
-    @Column(nullable = false)
-    @Getter
-    private String firstName;
-
-    @Column(nullable = false)
-    @Getter
-    private String lastName;
-
-    @Column(nullable = false)
+    @Column(length = 120)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @Getter
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(length = 20)
+    private String phone;
+
+    @Column(name = "image_url", length = 200)
+    private String imageUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonIgnore
     private Role role;
 
-    @Getter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BankAccount> bankAccounts = new ArrayList<>();
+    @JsonIgnore
+    private List<Bill> bills = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Card> cards = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "currency_id")
+    private Currency currency;
+
+    public User(String username, String email, String password, String firstName, String lastName, String phone) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(getRole());
+        return Collections.singleton(new SimpleGrantedAuthority(role.getName().name()));
     }
 
     @Override

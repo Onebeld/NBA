@@ -2,8 +2,7 @@ package com.onebeld.networkbudgetanalyzer.entities;
 
 import com.onebeld.networkbudgetanalyzer.enums.Operation;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -14,13 +13,17 @@ import java.sql.Timestamp;
 @Setter
 @Entity
 @Table(name = "transactions")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private BigDecimal amount;
+    @NonNull
+    private Double amount;
 
+    @NonNull
     private Timestamp createdAt;
 
     @ManyToOne
@@ -28,9 +31,14 @@ public class Transaction {
     private Organization organization;
 
     @ManyToOne
-    @JoinColumn(name = "bankAccount", referencedColumnName = "id")
-    private BankAccount bankAccount;
+    @JoinColumn(name = "card_id", referencedColumnName = "id")
+    private Card card;
 
+    @ManyToOne
+    @JoinColumn(name = "bill_id", referencedColumnName = "id")
+    private Bill bill;
+
+    @NonNull
     @Enumerated()
     @JdbcTypeCode(SqlTypes.SMALLINT)
     private Operation operation;

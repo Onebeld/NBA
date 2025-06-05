@@ -7,28 +7,27 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
-public class BankAccountServiceImpl {
+public class BillServiceImpl {
     private final TransactionRepository transactionRepository;
 
-    public BankAccountServiceImpl(TransactionRepository transactionRepository) {
+    public BillServiceImpl(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
 
-    public Page<Transaction> getTransactions(Long bankAccountId, int page, int size) {
+    public Page<Transaction> getTransactions(Long billId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return transactionRepository.findByBankAccountId(bankAccountId, pageable);
+        return transactionRepository.findByBillId(billId, pageable);
     }
 
-    public Optional<BigDecimal> getBalance(Long bankAccountId) {
-        Stream<Transaction> transactions = transactionRepository.findAllByBankAccountId(bankAccountId);
+    public Optional<Double> getBalance(Long billId) {
+        Stream<Transaction> transactions = transactionRepository.findAllByBillId(billId);
 
         return transactions
                 .map(Transaction::getAmount)
-                .reduce(BigDecimal::add);
+                .reduce(Double::sum);
     }
 }

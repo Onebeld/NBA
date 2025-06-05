@@ -16,14 +16,16 @@ const AddTransactionSvg = () => (
 const HomeDashboard: React.FC = () => {
     const { t } = useTranslation();
 
+    // const transactions: TransactionType[] =
+
     return (
         <div className={"flex-col"}>
             <h1 className={"dashboard-title"}>{t("Home")}</h1>
 
-            <div className={"flex gap-5 justify-center items-center mt-15"}>
-                <CurrencyCard isSmall={true} title={"Расход"} value={1000} currency={"$"} type={CardType.EXPENSE} />
-                <CurrencyCard title={"Баланс"} value={1000} currency={"$"} />
-                <CurrencyCard isSmall={true} title={"Доход"} value={1000} currency={"$"} type={CardType.INCOME} />
+            <div className={"flex gap-5 justify-center items-center mt-20"}>
+                <CurrencyCard isSmall={true} title={t("Expense")} value={1000} currency={"$"} type={CardType.EXPENSE} description={t("Last30Days")} />
+                <CurrencyCard title={t("Balance")} value={1000} currency={"$"} />
+                <CurrencyCard isSmall={true} title={t("Income")} value={1000} currency={"$"} type={CardType.INCOME} description={t("Last30Days")} />
             </div>
 
             <CardTips className={"mt-10"} />

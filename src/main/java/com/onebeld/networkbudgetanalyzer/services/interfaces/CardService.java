@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 
-public interface BankAccountService {
+public interface CardService {
     Page<Transaction> getTransactions(Long bankAccountId, Pageable pageable);
 
     BigDecimal getBalance(Long bankAccountId);

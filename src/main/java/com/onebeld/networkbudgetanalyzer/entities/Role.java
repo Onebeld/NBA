@@ -1,33 +1,28 @@
 package com.onebeld.networkbudgetanalyzer.entities;
 
+import com.onebeld.networkbudgetanalyzer.enums.ERole;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import java.util.Set;
 
-@Setter
-@Getter
 @Entity
-@Table(name = "t_role")
+@Table(name = "roles")
+@Getter
+@Setter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Role implements GrantedAuthority {
     @Id
-    private short id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Short id;
 
-    private String name;
-
-    @Transient
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    private Set<User> users;
-
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public Role() { }
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    @NonNull
+    private ERole name;
 
     @Override
     public String getAuthority() {
-        return getName();
+        return name.name();
     }
 }
