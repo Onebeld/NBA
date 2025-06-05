@@ -6,12 +6,13 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Bank {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NonNull
     @Column(nullable = false)

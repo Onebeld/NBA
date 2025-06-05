@@ -1,17 +1,18 @@
 import {TransactionType} from "../enums/TransactionType.tsx";
 import {Image} from "@heroui/react";
+import {Currency} from "../entities/currency.ts";
 
 interface TransactionProps {
     imageUrl: string;
     name: string;
     extra: string;
-    dateTime: string;
+    dateTime: Date;
     value: number;
     currency: string;
-    type?: TransactionType;
+    type?: string;
 }
 
-const Transaction = ({ imageUrl, name, extra, dateTime, value, currency, type = TransactionType.INCOME }: TransactionProps) => {
+const Transaction = ({ imageUrl, name, extra, dateTime, value, currency, type = "INCOME" }: TransactionProps) => {
     const valueFormatted = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
     return (
@@ -24,7 +25,7 @@ const Transaction = ({ imageUrl, name, extra, dateTime, value, currency, type = 
                 </div>
             </div>
             <p className={"text-primary-300 text-[14px]"}>{dateTime}</p>
-            <p className={(type === TransactionType.INCOME ? "text-success" : "text-danger") + " font-bold"}>{type === TransactionType.INCOME ? "+" : "-"}{currency} {valueFormatted}</p>
+            <p className={(type === "INCOME" ? "text-success" : "text-danger") + " font-bold"}>{type === "INCOME" ? "+" : "-"}{currency} {valueFormatted}</p>
         </div>
     );
 }

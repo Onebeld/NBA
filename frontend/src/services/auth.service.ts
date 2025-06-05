@@ -41,6 +41,25 @@ class AuthService {
         return response.data;
     }
 
+    async register(username: string, email: string, password: string, firstName: string, lastName: string, phone: string): Promise<AuthResponse> {
+        const response = await axios.post<AuthResponse>(
+            `${API_URL}register`,
+            { username, email, password, firstName, lastName, phone },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+
+        return response.data;
+    }
+
     /**
      * Logout user and remove the JWT token
      */

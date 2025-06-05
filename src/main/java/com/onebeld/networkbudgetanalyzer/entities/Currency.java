@@ -6,13 +6,14 @@ import lombok.*;
 @Setter
 @Getter
 @Entity
+@Builder
 @Table(name = "currency")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Currency {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private short id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Short id;
 
     @NonNull
     @Column(length = 3)

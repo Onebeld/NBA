@@ -17,6 +17,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import {initReactI18next} from "react-i18next";
 import {Suspense} from "react";
 import { AuthProvider } from "./contexts/AuthContext";
+import axios, {AxiosError} from "axios";
 
 i18n.use(HttpBackend)
     .use(LanguageDetector)
@@ -42,6 +43,32 @@ i18n.use(HttpBackend)
             useSuspense: false
         }
     });
+
+axios.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Add a response interceptor to handle 401 Unauthorized
+axios.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+        if (error.response?.status === 401) {
+            // Handle unauthorized error
+            console.error('Authentication required');
+            // You might want to redirect to login page or show a login modal
+        }
+        return Promise.reject(error);
+    }
+);
 
 const AppContent: React.FC = () => {
     const navigate = useNavigate();

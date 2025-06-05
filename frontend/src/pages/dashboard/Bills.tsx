@@ -1,9 +1,16 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import CurrencyCard from "../../components/CurrencyCard.tsx";
-import {Button, Tooltip, useDisclosure} from "@heroui/react";
+import {Button, CircularProgress, Tooltip, useDisclosure} from "@heroui/react";
 import AddBillWindow from "../../components/bills/AddBillWindow/AddBillWindow.tsx";
-import billService, {BillResponse} from "../../services/bill.service";
+import axios from "axios";
+import {useEffect} from "react";
+import {BillResponse} from "../../services/bill.service.ts";
+import BillItem from "../../components/bills/BillItem.tsx";
+import CardItem from "../../components/bills/CardItem.tsx";
+import Loading from "../../components/Loading.tsx";
+
+const API_URL = 'http://' + window.location.host + '/api/v1/';
 
 const AddSvg = () => (
     <svg width="17" height="17" className={"fill-primary"} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -11,12 +18,37 @@ const AddSvg = () => (
     </svg>
 );
 
-const Bills: React.FC = async () => {
+const Bills: React.FC = () => {
     const {t} = useTranslation();
 
     const [selectedTab, setSelectedTab] = React.useState("bill");
+    const [billResponse, setBillResponse] = React.useState<BillResponse>();
+    const [loading, setLoading] = React.useState(true);
 
     const {isOpen, onOpen, onClose} = useDisclosure();
+
+    const updatePage = () => {
+        getBills();
+    }
+
+    const getBills = async () => {
+        setLoading(true);
+        axios.get(API_URL + "bills")
+            .then((res) => {
+                setLoading(false);
+                console.log(res.data);
+                setBillResponse(res.data);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.error(err);
+                return null;
+            })
+    };
+
+    useEffect(() => {
+        getBills();
+    }, []);
 
     const openBillWindow = () => {
         setSelectedTab("bill");
@@ -30,7 +62,11 @@ const Bills: React.FC = async () => {
         onOpen();
     };
 
-    const response = await billService.getBill();
+    if (loading) {
+        return (
+            <Loading />
+        )
+    }
 
     return (
         <>
@@ -38,9 +74,9 @@ const Bills: React.FC = async () => {
                 <h1 className={"dashboard-title"}>{t("Bills")}</h1>
 
                 <div className={"flex gap-5 justify-center items-center mt-20"}>
-                    <CurrencyCard title={t("Bills")} value={response.billsBalance} currency={"$"} isSmall={true}/>
-                    <CurrencyCard title={t("TotalBalance")} value={response.balance} currency={"$"}/>
-                    <CurrencyCard title={t("Cards")} value={response.cardsBalance} currency={"$"} isSmall={true}/>
+                    <CurrencyCard title={t("Bills")} value={billResponse?.billsBalance} currency={billResponse?.currency} isSmall={true}/>
+                    <CurrencyCard title={t("TotalBalance")} value={billResponse?.balance} currency={billResponse?.currency}/>
+                    <CurrencyCard title={t("Cards")} value={billResponse?.cardsBalance} currency={billResponse?.currency} isSmall={true}/>
                 </div>
 
                 <div className={"flex gap-5 mt-20 min-h-[400px]"}>
@@ -55,8 +91,10 @@ const Bills: React.FC = async () => {
                                 </Button>
                             </Tooltip>
                         </div>
-                        <div className={"min-h-[300px]"}>
-
+                        <div className={"flex flex-col gap-3 min-h-[300px] mt-5"}>
+                            {billResponse?.bills.map((bill) => (
+                                <BillItem name={bill.name} number={bill.number} amount={bill.amount} currency={bill.currency} bank={bill.bank} rate={bill.rate} />
+                            ))}
                         </div>
                     </div>
 
@@ -74,14 +112,16 @@ const Bills: React.FC = async () => {
                                 </Button>
                             </Tooltip>
                         </div>
-                        <div className={"min-h-[300px]"}>
-
+                        <div className={"flex flex-col gap-3 min-h-[300px] mt-5"}>
+                            {billResponse?.cards.map((card) => (
+                                <CardItem cardType={card.cardType} number={card.number} amount={card.amount} currency={card.currency} bank={card.bank} />
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
 
-            <AddBillWindow isOpen={isOpen} onClose={onClose} selected={selectedTab}/>
+            <AddBillWindow updatePage={updatePage} isOpen={isOpen} onClose={onClose} selected={selectedTab}/>
         </>
     );
 }

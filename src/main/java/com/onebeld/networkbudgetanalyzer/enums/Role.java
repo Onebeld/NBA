@@ -1,6 +1,6 @@
 package com.onebeld.networkbudgetanalyzer.enums;
 
-public enum ERole {
+public enum Role {
     ROLE_USER,
     ROLE_ADMIN
 }

@@ -6,19 +6,19 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "transactions")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NonNull
     private Double amount;
@@ -37,6 +37,14 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "bill_id", referencedColumnName = "id")
     private Bill bill;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_type_id", referencedColumnName = "id")
+    private TransactionType transactionType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @NonNull
     @Enumerated()

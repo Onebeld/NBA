@@ -16,7 +16,7 @@ const CurrencyCard = ({title, value, currency, isSmall = false, type = CardType.
     const chartRef = useRef(null);
     const [gradient, setGradient] = useState<string | CanvasGradient>("#000");
 
-    const valueFormatted = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const valueFormatted = value;
 
     const sizeClassNames = isSmall ? "w-[210px] h-[130px]" : "w-[300px] h-[160px]";
     const fontValueClassNames = isSmall ? "text-[22px]" : "text-[30px]";

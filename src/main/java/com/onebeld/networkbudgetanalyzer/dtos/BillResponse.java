@@ -13,6 +13,7 @@ public class BillResponse {
     private Double balance;
     private Double billsBalance;
     private Double cardsBalance;
+    private String currency;
 
     private List<BillItemResponse> bills;
     private List<CardItemResponse> cards;

@@ -1,40 +1,14 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import {Currency} from "../entities/currency.ts";
 
 const API_URL = 'http://' + window.location.host + '/api/v1/';
-
-// Add a request interceptor to include the token
-axios.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
-
-// Add a response interceptor to handle 401 Unauthorized
-axios.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError) => {
-        if (error.response?.status === 401) {
-            // Handle unauthorized error
-            console.error('Authentication required');
-            // You might want to redirect to login page or show a login modal
-        }
-        return Promise.reject(error);
-    }
-);
 
 export interface BillItemResponse {
     name: string;
     number: string;
     bank: string;
     amount: number;
-    currency: string;
+    currency: Currency;
     rate: number;
 }
 
@@ -43,13 +17,14 @@ export interface CardItemResponse {
     number: string;
     bank: string;
     amount: number;
-    currency: string;
+    currency: Currency;
 }
 
 export interface BillResponse {
     balance: number;
     billsBalance: number;
     cardsBalance: number;
+    currency: string;
 
     bills: BillItemResponse[];
     cards: CardItemResponse[];

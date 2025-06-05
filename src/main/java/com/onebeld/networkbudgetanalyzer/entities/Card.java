@@ -5,20 +5,20 @@ import com.onebeld.networkbudgetanalyzer.enums.CardType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "cards")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Card {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NonNull
     @Column(nullable = false)
@@ -26,9 +26,10 @@ public class Card {
 
     @NonNull
     @Column(nullable = false)
-    private BigDecimal initialBalance;
+    private Double initialBalance;
 
     @NonNull
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CardType cardType;
 

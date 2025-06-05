@@ -39,6 +39,19 @@
   "BillNumber": "Номер счета",
   "BillNumberDescription": "Номер счета должен состоять из 20 цифр",
 
+  "DEBIT": "Дебетовая карта",
+  "CREDIT": "Кредитная карта",
+
+  "INCOME": "Доход",
+  "EXPENSE": "Расход",
+
+  "GOODS_PAYMENT": "Оплата товаров и услуг",
+  "SBP_TRANSFER": "Перевод по СБП",
+  "BETWEEN_MY_BILLS": "Между моими счетами",
+  "CASH_DEPOSIT": "Внесение наличных",
+  "CAPITALIZATION": "Капитализация",
+  "OTHER_INCOME": "Прочие поступления",
+
   "ProfileSetting":  "Настройка профиля",
   "Customization": "Персонализация",
   "Customization.EnableDarkTheme": "Включить темную тему",

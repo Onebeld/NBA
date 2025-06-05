@@ -20,6 +20,9 @@
   "Card": "Card",
   "Bill": "Bill",
 
+  "DEBIT": "Debit card",
+  "CREDIT": "Credit card",
+
   "ProfileSetting":  "Profile Setting",
   "Customization": "Customization",
   "Customization.EnableDarkTheme": "Enable dark theme",

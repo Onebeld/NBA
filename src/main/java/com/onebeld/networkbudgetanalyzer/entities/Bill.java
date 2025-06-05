@@ -11,13 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "bills")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class Bill {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NonNull
     @Column(nullable = false)

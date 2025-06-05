@@ -1,5 +1,6 @@
 package com.onebeld.networkbudgetanalyzer.dtos;
 
+import com.onebeld.networkbudgetanalyzer.entities.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +13,5 @@ public class CardItemResponse {
     private String number;
     private String bank;
     private Double amount;
-    private String currency;
+    private Currency currency;
 }
